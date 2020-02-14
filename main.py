@@ -1,8 +1,5 @@
-import machine
-import network
 import pycom
 import time
-
 
 # try:
 from pymesh_config import PymeshConfig
@@ -28,6 +25,7 @@ def new_message_cb(rcv_ip, rcv_port, rcv_data):
         time.sleep(.1)
     return
 
+
 pycom.heartbeat(False)
 
 # read config file, or set default values
@@ -43,14 +41,11 @@ pymesh = Pymesh(pymesh_config, new_message_cb)
 #     pymesh.leader_priority(255)
 
 while not pymesh.is_connected():
-    time_now = time.time()
     print(pymesh.status_str())
     time.sleep(3)
 
 # send message to the Node having MAC address 5
-pymesh.send_mess("ff03::1", "Repeater ready to relay messages")
-
-print(pymesh.is_connected())
+pymesh.send_mess("ff03::1", "Repeater is ready to relay")
 
 # def new_br_message_cb(rcv_ip, rcv_port, rcv_data, dest_ip, dest_port):
 #     ''' callback triggered when a new packet arrived for the current Border Router,
