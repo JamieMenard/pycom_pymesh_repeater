@@ -106,17 +106,6 @@ class Cli:
                     }
                     print(self.mesh.send_message(data))
 
-                elif cmd == 'all':
-                    txt = input('(text/filename)<')
-                    data = {
-                        'to': 'ff03::1',
-                        'ty': 0,
-                        'b': txt,
-                        'id': 12345,
-                        'ts': int(time.time()),
-                    }
-                    print(self.mesh.send_message(data))
-
                 elif cmd == 'ws':
                     to = int(input('(to)<'))
                     try:
@@ -262,7 +251,6 @@ class Cli:
                     print("mml - display the Mesh Mac List (MAC of all nodes inside this Mesh), also inquires Leader")
                     print("mp - display the Mesh Pairs (Pairs of all nodes connections), also inquires Leader")
                     print("s - send message")
-                    print("All - send a message to all nodes")
                     print("ws - verifies if message sent was acknowledged")
                     print("rm - verifies if any message was received")
                     print("sleep - deep-sleep")

@@ -6,7 +6,6 @@
 # see the Pycom Licence v1.0 document supplied with this file, or
 # available at https://www.pycom.io/opensource/licensing
 
-import machine
 from network import LoRa
 import socket
 import time
@@ -181,7 +180,6 @@ class Loramesh:
         """ Sets the LED according to the Thread role """
         if self.state == STATE_LEADER and self.mesh.single():
             pycom.rgbled(self.RGBLED[self.STATE_LEADER_SINGLE])
-            machine.reset()
         else:
             pycom.rgbled(self.RGBLED[self.state])
 
