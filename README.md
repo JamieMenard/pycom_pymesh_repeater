@@ -14,10 +14,12 @@ JM batt level XX
 
 JM RESET
 
-JM send baro
+JM send baro XX
 
-JM send temp
+JM send temp XX
 
-JM set time
+JM set time XX(mac, must be two digits) XXXX(Year) XX(Month) XX(Day) XX(Hours) XX(Min) XX(secs) XX(uSecs) XX(timezone)
 
-JM how set
+Typical times set would look like "JM set time 01 2020 2 22 10 43 00 00 00"
+
+JM how set XX
