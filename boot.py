@@ -1,5 +1,4 @@
 import pycom
-from pycoproc import Pycoproc
 import os
 import machine
 from machine import UART
@@ -13,8 +12,5 @@ wlan.deinit()
 bt = Bluetooth()
 bt.deinit()
 
-py = Pycoproc()
-ANSELC_ADDR = const(0x18E)
-py.poke_memory(ANSELC_ADDR, ~(1 << 7))
 
 machine.main('main.py')
