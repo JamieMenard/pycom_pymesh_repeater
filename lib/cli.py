@@ -1,5 +1,5 @@
 
-# Copyright (c) 2019, Pycom Limited.
+# Copyright (c) 2020, Pycom Limited.
 #
 # This software is licensed under the GNU GPL version 3 or any
 # later version, with permitted additional terms. For more information
@@ -46,13 +46,6 @@ class Cli:
             while True:
                 time.sleep(.1)
                 cmd = input('>')
-                # cmd = " "
-                # time.sleep(3)
-                # print("cli")
-
-                # if cmd == 'rb':
-                #     print('resetting unpacker buffer')
-                #     self.rpc_handler = RPCHandler(rx_worker, tx_worker, mesh, ble_comm)
 
                 if cmd == 'ip':
                     print(self.mesh.ip())
@@ -93,32 +86,20 @@ class Cli:
                         last_mesh_pairs = mesh_pairs
                     print('last_mesh_pairs', json.dumps(last_mesh_pairs))
 
-                elif cmd == 'all':
-                    txt = input('(text/filename)<')
-                    data = {
-                        'to': 'ff03::1',
-                        'ty': 0,
-                        'b': txt,
-                        'id': 12345,
-                        'ts': int(time.time()),
-                    }
-                    print(self.mesh.send_message(data))
-
                 elif cmd == 's':
                     try:
                         to = int(input('(to)<'))
-                        typ = input('(type, 0=text, 1=file, Enter for text)<')
-                        if not typ:
-                            typ = 0
-                        else:
-                            typ = int(typ)
-                        txt = input('(text/filename)<')
+                        # typ = input('(type, 0=text, 1=file, Enter for text)<')
+                        # if not typ:
+                        #     typ = 0
+                        # else:
+                        #     typ = int(typ)
+                        txt = input('(message)<')
                     except:
-                        print("Command parsing failed")
                         continue
                     data = {
                         'to': to,
-                        'ty': typ,
+                        # 'ty': 0,
                         'b': txt,
                         'id': 12345,
                         'ts': int(time.time()),
@@ -264,7 +245,6 @@ class Cli:
 
                 else:
                     print("List of available commands")
-                    print("all - send a test message to all nodes")
                     print("ip - display current IPv6 unicast addresses")
                     print("mac - set or display the current LoRa MAC address")
                     print("self - display all info about current node")

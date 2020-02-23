@@ -1,8 +1,11 @@
-# Pymesh micropython code
+# Pymesh Lora Repeater
 
-This project exemplifies the use of Pycom's proprietary LoRa Mesh network - **Pymesh**.
-These scripts were created and tested on Lopy4 and Fipy, using the Pymesh binary release.
+This is mostly vanilla pymesh code with the addition of some remote commands Use with firmware 1.20.2.r1
 
-Official Pymesh docs: https://docs.pycom.io/pymesh/
+Use from REPL by cli commands 's' enter, mac address you want to get data from,
+enter, then one of the following messages.
 
-Forum Pymesh announcements: https://forum.pycom.io/topic/4449/pymesh-updates
+XX = mac address to send data to; 1, 2, 10, etc
+JM send self XX
+JM batt level XX
+JM RESET
