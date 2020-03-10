@@ -23,9 +23,20 @@ from pymesh import Pymesh
 # except:
 #     from _pymesh import Pymesh
 
+lh_mesh_version = "1.0.0"
+
 def make_message_status(msg):
     status_msg = ("STATUS: %s" % msg)
     return status_msg
+
+def send_mesh_version(sending_mac):
+    if len(sending_mac) == 0:
+        print("Mac address format wrong")
+        return
+    msg = make_message_status(("Repeater SW version: %s" % lh_mesh_version))
+    time.sleep(1)
+    pymesh.send_mess(sending_mac, str(msg))
+    time.sleep(3)
 
 def format_time(given_time):
     format_time = ("[%d:%d %d/%d]"  % (given_time[3], given_time[4], given_time[1], given_time[2]))
@@ -187,7 +198,9 @@ def new_message_cb(rcv_ip, rcv_port, rcv_data):
             set_my_time(sending_mac)
         elif msg[:16] == "JM set your time":
             first_time_set()
-
+        elif msg[:11] == "JM send swv":
+            sending_mac = msg[12:]
+            send_mesh_version(sending_mac)
     else:
         f = open('/sd/www/chat.txt', 'a+')
         f.write('%s %s\n' % (now_time, msg))
