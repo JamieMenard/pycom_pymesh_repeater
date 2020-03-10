@@ -8,6 +8,7 @@
 
 import time
 from machine import Timer
+# from struct import *
 import _thread
 
 try:
@@ -21,9 +22,9 @@ except:
 #     from _statistics import Statistics
 
 try:
-    from meshaging import Meshaging
+    from meshaging import Meshaging # , Message
 except:
-    from _meshaging import Meshaging
+    from _meshaging import Meshaging # , Message
 
 try:
     from pymesh_debug import print_debug
@@ -48,10 +49,12 @@ class MeshInterface:
         all modules that uses Mesh should call only this class methods """
 
     INTERVAL = const(10)
+    # PACK_MESSAGE = '!QHH'  # mac, id, payload size, and payload(char[])
 
     def __init__(self, config, message_cb):
         self.lock = _thread.allocate_lock()
         self.meshaging = Meshaging(self.lock)
+        # self.message = Message()
         self.config = config
         self.mesh = MeshInternal(self.meshaging, config, message_cb)
         self.sleep_function = None

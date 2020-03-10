@@ -88,7 +88,6 @@ def send_self_info(sending_mac):
     if len(sending_mac) == 0:
         print("Mac address format wrong")
         return
-    now_time = current_time()
     node_info = str(pymesh.mesh.get_node_info())
     msg = make_message_status(("self info: %s" % node_info))
     pymesh.send_mess(sending_mac, str(msg))
@@ -99,7 +98,6 @@ def send_battery_voltage(sending_mac):
         print("Mac address format wrong")
         return
     volts = str(py.read_battery_voltage())
-    now_time = current_time()
     own_mac = str(pymesh.mesh.mesh.MAC)
     msg = make_message_status(('Mac Address %s battery level is: %s' % (own_mac, volts)))
     pymesh.send_mess(sending_mac, str(msg))
@@ -123,13 +121,10 @@ def send_baro(sending_mac):
         if len(sending_mac) == 0:
             print("Mac address format wrong")
             return
-        now_time = current_time()
-        msg1 = (now_time + " MPL3115A2 temperature: " + str(mp.temperature())+
+        msg1 = ("MPL3115A2 temperature: " + str(mp.temperature())+
                 " Altitude: " + str(mp.altitude()))
         pymesh.send_mess(sending_mac, str(msg1))
         time.sleep(2)
-        msg2 = (now_time + " Pressure: " + str(mpp.pressure()))
-        pymesh.send_mess(sending_mac, str(msg2))
     elif pysense_s == False:
         no_baro = "This node doesn't have Baro"
         msg = make_message_status(no_temp)
@@ -141,18 +136,9 @@ def send_temp(sending_mac):
         if len(sending_mac) == 0:
             print("Mac address format wrong")
             return
-        now_time = current_time()
-        msg1 = make_message_status((now_time + " Temperature: " + str(si.temperature())+
+        msg1 = make_message_status(("Temperature: " + str(si.temperature())+
                 " deg C and Relative Humidity: " + str(si.humidity()) + " %RH"))
         pymesh.send_mess(sending_mac, str(msg1))
-        time.sleep(2)
-        msg2 = make_message_status((now_time + " Dew point: "+ str(si.dew_point()) + " deg C"))
-        pymesh.send_mess(sending_mac, str(msg2))
-        time.sleep(2)
-        t_ambient = 24.4
-        msg3 = make_message_status((now_time + " Humidity Ambient for " + str(t_ambient) + " deg C is "
-                + str(si.humid_ambient(t_ambient)) + "%RH"))
-        pymesh.send_mess(sending_mac, str(msg3))
         time.sleep(2)
     elif pysense_s == False:
         no_temp = "This node doesn't have Temp"
@@ -199,7 +185,10 @@ def new_message_cb(rcv_ip, rcv_port, rcv_data):
         elif msg[:14] == "JM set my time":
             sending_mac = msg[15:]
             set_my_time(sending_mac)
+        elif msg[:16] == "JM set your time":
+            first_time_set()
 
+    else:
         f = open('/sd/www/chat.txt', 'a+')
         f.write('%s %s\n' % (now_time, msg))
         f.close()
